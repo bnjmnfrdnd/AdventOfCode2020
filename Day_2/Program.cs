@@ -10,7 +10,8 @@ namespace Day_2
         {
             StreamReader sr = new StreamReader("../../Day_2_Puzzle.txt");
             String line = sr.ReadLine();
-
+            HashSet<string> part1ValidPasswords = new HashSet<string>();
+            HashSet<string> part2ValidPasswords = new HashSet<string>();
             char[] delimArray = { '-', ' ', ':' };
             char[] letterArray;
             string[] inputTemp;
@@ -21,8 +22,6 @@ namespace Day_2
             int requiredCharacterPositionTwo;
             string password;
             int requirementCounter;
-            int part1ValidPasswordCounter = 0;
-            int part2ValidPasswordCounter = 0;
             bool part1PasswordValid = false;
             bool part2PasswordValid = false;
 
@@ -41,54 +40,46 @@ namespace Day_2
 
                 if (password.Contains(requiredCharacter.ToString()))
                 {
-                    part1PasswordValid = false;
-                    part2PasswordValid = false;
                     requirementCounter = 0;
                     letterArray = password.ToCharArray();
 
                     //Part 1 
 
-                    foreach (char letter in letterArray)
-                    {
-                        if (letter == requiredCharacter)
-                        {
-                            requirementCounter++;
-                        }
-                    }
+                    foreach (char letter in letterArray) { if (letter == requiredCharacter) requirementCounter++; }
 
                     if (requirementCounter >= minimumRequirement && requirementCounter <= maximumRequirement)
                     {
-                        part1PasswordValid = true; 
-                        part1ValidPasswordCounter++;
+                        part1ValidPasswords.Add(password);
+                        part1PasswordValid = true;
                     }
 
                     //Part 2
 
                     if (letterArray[requiredCharacterPositionOne - 1] == requiredCharacter && letterArray[requiredCharacterPositionTwo - 1] != requiredCharacter)
                     {
+                        part2ValidPasswords.Add(line);
                         part2PasswordValid = true;
-                        part2ValidPasswordCounter++;
-                    } 
+                    }
                     else if (letterArray[requiredCharacterPositionTwo - 1] == requiredCharacter && letterArray[requiredCharacterPositionOne - 1] != requiredCharacter)
                     {
+                        part2ValidPasswords.Add(line);
                         part2PasswordValid = true;
-                        part2ValidPasswordCounter++;
                     }
                 }
 
+                Console.WriteLine("Password: " + password);
+                Console.WriteLine("Required character: " + requiredCharacter);
                 Console.WriteLine("Minimum requirement/Position 1: " + minimumRequirement);
                 Console.WriteLine("Maximum requirement/Position 2: " + maximumRequirement);
-                Console.WriteLine("Required character: " + requiredCharacter);
-                Console.WriteLine("Password: " + password);
-                Console.WriteLine("Password Valid (Part 1): " + part1PasswordValid);
-                Console.WriteLine("Password Valid (Part 2): " + part2PasswordValid);
-
+                Console.WriteLine("Password Valid (part 1): " + part1PasswordValid);
+                Console.WriteLine("Password Valid (part 2): " + part2PasswordValid);
+                Console.WriteLine();
                 line = sr.ReadLine();
             }
-
-            Console.WriteLine("Valid passwords (Part 1): " + part1ValidPasswordCounter);
-            Console.WriteLine("Valid passwords (Part 2): " + part2ValidPasswordCounter);
+            Console.WriteLine("Valid passwords (part 1): {0}", part1ValidPasswords.Count);
+            Console.WriteLine("Valid passwords (part 2): {0}", part2ValidPasswords.Count);
             Console.ReadLine();
         }
+        // Answers 538/489
     }
 }
