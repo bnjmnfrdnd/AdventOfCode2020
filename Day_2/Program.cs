@@ -23,6 +23,8 @@ namespace Day_2
             int requirementCounter;
             int part1ValidPasswordCounter = 0;
             int part2ValidPasswordCounter = 0;
+            bool part1PasswordValid = false;
+            bool part2PasswordValid = false;
 
             while (line != null)
             {
@@ -39,6 +41,8 @@ namespace Day_2
 
                 if (password.Contains(requiredCharacter.ToString()))
                 {
+                    part1PasswordValid = false;
+                    part2PasswordValid = false;
                     requirementCounter = 0;
                     letterArray = password.ToCharArray();
 
@@ -54,6 +58,7 @@ namespace Day_2
 
                     if (requirementCounter >= minimumRequirement && requirementCounter <= maximumRequirement)
                     {
+                        part1PasswordValid = true; 
                         part1ValidPasswordCounter++;
                     }
 
@@ -61,10 +66,12 @@ namespace Day_2
 
                     if (letterArray[requiredCharacterPositionOne - 1] == requiredCharacter && letterArray[requiredCharacterPositionTwo - 1] != requiredCharacter)
                     {
+                        part2PasswordValid = true;
                         part2ValidPasswordCounter++;
                     } 
                     else if (letterArray[requiredCharacterPositionTwo - 1] == requiredCharacter && letterArray[requiredCharacterPositionOne - 1] != requiredCharacter)
                     {
+                        part2PasswordValid = true;
                         part2ValidPasswordCounter++;
                     }
                 }
@@ -73,11 +80,14 @@ namespace Day_2
                 Console.WriteLine("Maximum requirement/Position 2: " + maximumRequirement);
                 Console.WriteLine("Required character: " + requiredCharacter);
                 Console.WriteLine("Password: " + password);
+                Console.WriteLine("Password Valid (Part 1): " + part1PasswordValid);
+                Console.WriteLine("Password Valid (Part 2): " + part2PasswordValid);
+
                 line = sr.ReadLine();
             }
 
-            Console.WriteLine("Valid passwords (part 1): " + part1ValidPasswordCounter);
-            Console.WriteLine("Valid passwords (part 2): " + part2ValidPasswordCounter);
+            Console.WriteLine("Valid passwords (Part 1): " + part1ValidPasswordCounter);
+            Console.WriteLine("Valid passwords (Part 2): " + part2ValidPasswordCounter);
             Console.ReadLine();
         }
     }
